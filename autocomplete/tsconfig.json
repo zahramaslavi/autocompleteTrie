@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+      "target": "es5",                           // JavaScript version to transpile down to
+      "module": "esnext",                        // Module system
+      "jsx": "react-jsx",                        // Use the new JSX transform
+      "strict": true,                            // Enable strict type checking
+      "esModuleInterop": true,                   // Allow default imports from CommonJS modules
+      "skipLibCheck": true,                      // Skip type checks for libraries
+      "moduleResolution": "node",                // Resolve modules using Node's resolution mechanism
+      "forceConsistentCasingInFileNames": true,  // Enforce consistent casing in imports
+      "baseUrl": ".",                            // Base URL for relative imports
+      "paths": {
+        "@/*": ["src/*"]                         // Setup alias for the src directory
+      }
+    },
+    "include": ["src/**/*"],                     // Include all files in src/
+    "exclude": ["node_modules", "dist"]          // Exclude node_modules and dist
+}
+  

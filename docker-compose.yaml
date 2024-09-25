@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  autocompletenode:
+    build: ./autocomplete-node
+    ports:
+      - '3001:3001'
+    volumes:
+      - ./autocomplete-node:/usr/src/app
+    container_name: autocomplete-node
+    networks:
+      - app-network
+
+  autocompletereact:
+    build: ./autocomplete
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./autocomplete:/usr/src/app
+    container_name: autocomplete-react
+    depends_on:
+      - autocompletenode
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

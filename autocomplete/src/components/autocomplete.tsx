@@ -7,19 +7,12 @@ const AutoField = () => {
     const [ inputValue, setInputValue ] = useState<string>(""); 
     const [ options, setOptions ] = useState<string[]>([]);
     const [ debouncedVal, setDebouncedVal ] = useState<string>("");
-    const { suggestions, loading, handleGetSuggestions} = useSuggestion();
-
-    // const handleInputChange = (val: string) => {
-    //     console.log("val", val)
-    //     setInputValue(val);
-        
-    // }
+    const { suggestions, handleGetSuggestions, handleSearch} = useSuggestion();
 
     useEffect(() => {
         const t = setTimeout(() => {
             console.log(inputValue)
             setDebouncedVal(inputValue)
-            
         }, 1000);
 
         return () => clearTimeout(t);
@@ -27,12 +20,17 @@ const AutoField = () => {
 
     useEffect(() => {
         handleGetSuggestions(debouncedVal);
-        if (suggestions.length) {
-            setOptions(suggestions);
+    }, [debouncedVal]);
+
+    useEffect(() => {
+        setOptions(suggestions);
+    }, [suggestions]);
+
+    useEffect(() => {
+        if (value) {
+            handleSearch(value)
         }
-        
-        console.log(options)
-    }, [debouncedVal, suggestions]);
+    }, [value]);
 
     return (
         <Autocomplete

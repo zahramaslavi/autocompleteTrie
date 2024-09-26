@@ -64,6 +64,8 @@ class Trie {
         for (const char of word) {
             if (char in curr.children) {
                 curr = curr.children[char];
+            } else {
+                return [];
             }
         }
 

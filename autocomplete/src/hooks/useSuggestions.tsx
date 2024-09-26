@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { getSuggestions } from "../api/apiClient";
+import { getSuggestions, searchWord } from "../api/apiClient";
 
 const UseSuggestion = () => {
     const [ suggestions, setSuggestions ] = useState([]);
@@ -10,11 +10,17 @@ const UseSuggestion = () => {
         setSuggestions(sugg);
     }
 
+    const handleSearch = async (word: string) => {
+        const res = await searchWord(word);
+        console.log(res)
+    }
+
 
     return {
         suggestions,
         loading,
-        handleGetSuggestions
+        handleGetSuggestions,
+        handleSearch
     }
 }
 

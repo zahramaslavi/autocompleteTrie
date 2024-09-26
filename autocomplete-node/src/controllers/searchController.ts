@@ -21,6 +21,11 @@ export const searchWord = async (req: Request, res: Response) => {
         const word = req.params.word;
         const found = trie?.search(word);
 
+        if (!found) {
+            // todo: write to log file to be process by worker 
+            // or directly somehow send to worker if possible
+        }
+
         res.send(found);
     } catch (error) {
         console.log(`Error happened searching ${req.params.word} : ${error}`);

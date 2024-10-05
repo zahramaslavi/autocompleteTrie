@@ -26,4 +26,13 @@ export const searchWord: any = async (searchWord: string) => {
         console.log(`Failed to search word ${searchWord}`);
         throw error;
     }
-} 
+}
+
+export const getCount: any = async () => {
+    try {
+        const res = await apiClient.get("/test/times");
+        return res.data.count;
+    } catch (error) {
+        
+    }
+}

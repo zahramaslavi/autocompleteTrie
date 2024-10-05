@@ -5,6 +5,7 @@ services:
     build: ./autocomplete-node
     ports:
       - '3001:3001'
+      - '4001:8081'
     volumes:
       - ./autocomplete-node:/usr/src/app
     container_name: autocomplete-node
@@ -20,6 +21,10 @@ services:
     container_name: autocomplete-react
     depends_on:
       - autocompletenode
+    networks:
+      - app-network
+  redis-server:
+    image: 'redis'
     networks:
       - app-network
 

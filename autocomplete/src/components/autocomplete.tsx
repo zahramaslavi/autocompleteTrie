@@ -7,7 +7,7 @@ const AutoField = () => {
     const [ inputValue, setInputValue ] = useState<string>(""); 
     const [ options, setOptions ] = useState<string[]>([]);
     const [ debouncedVal, setDebouncedVal ] = useState<string>("");
-    const { suggestions, handleGetSuggestions, handleSearch} = useSuggestion();
+    const { suggestions, count, handleGetSuggestions, handleSearch} = useSuggestion();
 
     useEffect(() => {
         const t = setTimeout(() => {
@@ -33,23 +33,27 @@ const AutoField = () => {
     }, [value]);
 
     return (
-        <Autocomplete
-            inputValue={inputValue}
-            value={value}
-            onInputChange={(e: any, newInputValue: string) => setInputValue(newInputValue)}
-            onChange={(e: any, newValue: string | null) => {
-                setValue(newValue);
-            }}
-            id="combo-box-demo"
-            options={options}
-            getOptionLabel={(option) => option}
-            style={{ width: 300 }}
-            renderInput={(params) => (
-            <TextField {...params} label="Combo box" variant="outlined" />
-            )}
-            open={options.length > 0}
-            filterOptions={(options) => options} 
-      />
+        <>
+            {count && <div>{count}</div>}
+            <Autocomplete
+                inputValue={inputValue}
+                value={value}
+                onInputChange={(e: any, newInputValue: string) => setInputValue(newInputValue)}
+                onChange={(e: any, newValue: string | null) => {
+                    setValue(newValue);
+                }}
+                id="combo-box-demo"
+                options={options}
+                getOptionLabel={(option) => option}
+                style={{ width: 300 }}
+                renderInput={(params) => (
+                <TextField {...params} label="Combo box" variant="outlined" />
+                )}
+                open={options.length > 0}
+                filterOptions={(options) => options} 
+            />
+        </>
+        
     )
 }
 

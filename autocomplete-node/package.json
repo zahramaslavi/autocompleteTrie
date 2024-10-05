@@ -12,17 +12,20 @@
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "express": "^4.21.0",
+    "ioredis": "^5.4.1",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.5",
+    "redis": "^4.7.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.2",
+    "winston": "^3.14.2"
   },
   "scripts": {
     "build": "tsc",
     "start": "nodemon --exec ts-node src/index.ts",
     "dev": "tsc --watch",
     "clear": "rm -rf node_modules dist && yarn cache clean",
-    "docker build": "docker build -t zahramaslavi/autocomplete-node .",
-    "docker run": "docker run -p 3001:3001 zahramaslavi/autocomplete-node"
+    "docker-build": "docker build -t zahramaslavi/autocomplete-node .",
+    "docker-run": "docker run -p 3001:3001 zahramaslavi/autocomplete-node"
   }
 }

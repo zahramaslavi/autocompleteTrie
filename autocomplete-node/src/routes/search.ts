@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { searchWord, getSuggestions, getSearchTimes } from "../controllers/searchController";
+import { searchWord, getSuggestions } from "../controllers/searchController";
 
 const searchRouter = Router();
 

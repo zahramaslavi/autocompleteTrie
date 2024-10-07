@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Trie, { getSearchCount } from "../repository/trie";
+import Trie from "../repository/trie";
 import TrieRedis from "../repository/trieRedis";
 const winston = require('winston');
 
@@ -52,7 +52,6 @@ export const getSuggestions = async (req: Request, res: Response) => {
         const suggestions = await trieRedis?.topSuggestions(word);
 
         if (suggestions) {
-            console.log("sfdszvzxczxc", suggestions)
             res.send(suggestions);
         } else {
             res.status(400).send(`There was an issue getting suggestions for ${word}`);
@@ -62,14 +61,3 @@ export const getSuggestions = async (req: Request, res: Response) => {
     }
 }
 
-export const getSearchTimes = async (req: Request, res: Response) => {
-    try {
-        console.log("sfsdfsdfsdfsd")
-        const count = await getSearchCount()
-        console.log("sfsdfsdfsdfsd", count)
-
-        res.send({count})
-    } catch (error) {
-        console.log(`Error happened getting your search times: ${error}`);
-    }
-}

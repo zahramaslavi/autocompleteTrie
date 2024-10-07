@@ -7,7 +7,7 @@ const AutoField = () => {
     const [ inputValue, setInputValue ] = useState<string>(""); 
     const [ options, setOptions ] = useState<string[]>([]);
     const [ debouncedVal, setDebouncedVal ] = useState<string>("");
-    const { suggestions, count, handleGetSuggestions, handleSearch} = useSuggestion();
+    const { suggestions, handleGetSuggestions, handleSearch} = useSuggestion();
 
     useEffect(() => {
         const t = setTimeout(() => {
@@ -34,7 +34,6 @@ const AutoField = () => {
 
     return (
         <>
-            {count && <div>{count}</div>}
             <Autocomplete
                 inputValue={inputValue}
                 value={value}

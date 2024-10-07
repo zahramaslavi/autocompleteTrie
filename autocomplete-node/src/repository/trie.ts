@@ -1,16 +1,3 @@
-import Redis from "ioredis";
-
-const redisClient = new Redis({
-    host: 'redis-server',
-    port: 6379
-});
-
-export const getSearchCount = async () => {
-    const num = await redisClient.get('search-times');
-
-    return num
-}
-
 interface childrenI {
     [key: string]: TrieNode;
 }
@@ -32,14 +19,6 @@ class Trie {
     root = new TrieNode();
 
     async insert(word: string, freq: number): Promise<boolean> {
-        const num = await redisClient.get('search-times');
-        
-        if (num) {
-            await redisClient.set('search-times', parseInt(num)+freq);
-        } else {
-            await redisClient.set('search-times', freq);
-        }
-        
         let curr = this.root;
 
         // implementing storing the trie in redis

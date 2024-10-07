@@ -3,7 +3,6 @@ import cors from "cors";
 import morgan from "morgan";
 import bodyParser from "body-parser";
 import searchRouter from "./routes/search";
-import testRouter from "./routes/test";
 import { initTrie } from "./controllers/searchController";
 
 const app = express();
@@ -26,7 +25,6 @@ const app = express();
         app.use(bodyParser.json());
 
         app.use("/search", searchRouter);
-        app.use("/test", testRouter);
 
         app.use((req, res) => {
             res.status(404).render("404");

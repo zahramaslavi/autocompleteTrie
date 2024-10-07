@@ -27,7 +27,6 @@ class TrieRedis {
         await redis.hset(key, "freq", freq);
 
         const s = await redis.hgetall(key);
-        console.log(s)
 
         return true;
     }

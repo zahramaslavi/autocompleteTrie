@@ -27,12 +27,3 @@ export const searchWord: any = async (searchWord: string) => {
         throw error;
     }
 }
-
-export const getCount: any = async () => {
-    try {
-        const res = await apiClient.get("/test/times");
-        return res.data.count;
-    } catch (error) {
-        
-    }
-}

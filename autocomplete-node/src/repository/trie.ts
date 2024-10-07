@@ -1,4 +1,3 @@
-import { appendFile } from "fs";
 import Redis from "ioredis";
 
 const redisClient = new Redis({

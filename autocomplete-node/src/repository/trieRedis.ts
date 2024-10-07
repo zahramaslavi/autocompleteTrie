@@ -23,7 +23,6 @@ class TrieRedis {
             await redis.hincrby(key, field, 1);
             key += word[i];   
         }
-        console.log("--------", key)
         await redis.hset(key, "endOfWord", 1);
         await redis.hset(key, "freq", freq);
 
@@ -53,21 +52,23 @@ class TrieRedis {
         const res: suggestionsI = {};
 
         const findSuggestion = async (currKey: string) => {
-            console.log("rec-----", currKey)
             const endOfWord = await redis.hget(currKey, "endOfWord");
             const freq = await redis.hget(currKey, "freq");
-            console.log("rec-----", currKey, endOfWord, freq)
             if (endOfWord && freq) {
                 res[currKey.split(':')[1]] = parseInt(freq);
-                console.log("qwqwqwqwqwq", res, currKey.split(':'), currKey)
-                return
+            }
+            
+            let fields = await redis.hgetall(currKey);
+            const children = Object.keys(fields)
+                .filter(item => item != "endOfWord" && item != "freq" && item != "topSuggestions");
+
+            if (!children.length) {
+                return;
             }
 
-            let fields = await redis.hgetall(currKey);
-            console.log("rec-----||||||", currKey, fields)
-            for (const field in fields) {
-                if (field != "endOfWord" && field != "freq" && field != "topSuggestions") {
-                    await findSuggestion(currKey+field);
+            for (const child of children) {
+                if (child != "endOfWord" && child != "freq" && child != "topSuggestions") {
+                    await findSuggestion(currKey+child);
                 }
             }
         }
@@ -79,25 +80,20 @@ class TrieRedis {
         let key = "trie:";
         for (let i = 0; i < strToSearch.length; i++) {
             const exists = await redis.hexists(key, strToSearch[i]);
-            console.log("{{{{{{{{{{{{{", key, exists)
             if (exists) {
                 key += strToSearch[i]
             } else {
                 return [];
             }
         }
-        console.log("{{{{{{{{{{{{{")
         const tSuggestons = await this.getCachedTopSuggestions(key);
-        console.log("{{{{{{{{{{---------------{{{", tSuggestons)
 
         if (tSuggestons.length) {
-            console.log("{{{{{{{{{{--||||||||||||||-------------{{{", tSuggestons)
-
             return tSuggestons
         }
         
         await findSuggestion(key);
-        console.log(res)
+        
         // Sort the result based on the frequency and return only the strings[]
         const topS = Object.keys(res).sort((a, b) => res[b] - res[a]);
         

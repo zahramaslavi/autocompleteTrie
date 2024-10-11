@@ -47,6 +47,35 @@ class TrieRedis {
         return endOfWord ? true : false;
     }
 
+    async getFullTrieJson(): Promise<any> {
+        return await this.getAkeyFields("");
+    }
+
+    async getAkeyFields(key: string): Promise<any> {
+        const res: any = {};
+
+        const endOfWord = await redis.hget("trie:"+key, "endOfWord");
+        const frequency = await redis.hget("trie:"+key, "freq");
+        const topSuggestions = await redis.hget("trie:"+key, "topSuggestions");
+        let fields = await redis.hgetall("trie:"+key);
+        res["name"] = endOfWord ? key : key[key.length-1];
+        res["attributes"] = {};
+        res["attributes"]["endOfWord"] = endOfWord;
+        res["attributes"]["frequency"]  = frequency;
+        res["attributes"]["topSuggestions"] = topSuggestions
+
+        const children = Object.keys(fields)
+            .filter(item => item != "endOfWord" && item != "freq" && item != "topSuggestions");
+            res["children"] = [];
+
+        if (children.length) {
+            for (const child of children) {
+                res["children"].push(await this.getAkeyFields(key+child));
+            }
+        }
+        return res;
+    }
+
     async topSuggestions(strToSearch: string): Promise<string[]> {
         const res: suggestionsI = {};
 
@@ -88,6 +117,7 @@ class TrieRedis {
         const tSuggestons = await this.getCachedTopSuggestions(key);
 
         if (tSuggestons.length) {
+            console.log("cached suggestions" + strToSearch, tSuggestons)
             return tSuggestons
         }
         

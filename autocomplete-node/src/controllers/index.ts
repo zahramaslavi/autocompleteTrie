@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import Trie from "../repository/trie";
 import TrieRedis from "../repository/trieRedis";
 const winston = require('winston');
 
@@ -13,7 +12,6 @@ const logger = winston.createLogger({
     ],
 });
 
-// let trie: Trie | null = null;
 let trieRedis: TrieRedis | null = new TrieRedis();
 
 interface wordsI {
@@ -31,15 +29,11 @@ export const initTrie = async () => {
 export const searchWord = async (req: Request, res: Response) => {
     try {
         const word = req.params.word;
-        const found = trieRedis?.search(word);
-
-        if (!found) {
-            logger.info(word);
-            console.log(word)
-            // todo: write to log file to be process by worker 
-            // or directly somehow send to worker if possible
-        }
-
+        const found = await trieRedis?.search(word);
+        
+        logger.info(word);
+        console.log(found);
+        console.log(word);
         res.send(found);
     } catch (error) {
         console.log(`Error happened searching ${req.params.word} : ${error}`);
@@ -58,6 +52,19 @@ export const getSuggestions = async (req: Request, res: Response) => {
         }
     } catch (error) {
         console.log(`Error happened searching ${req.params.word} : ${error}`);
+    }
+}
+
+export const getFullTrieJson = async (req: Request, res: Response) => {
+    try {
+        const trieJson = await trieRedis.getFullTrieJson();
+        if (trieJson) {
+            res.send(trieJson);
+        } else {
+            res.status(400).send("There was an issue fetching the trie json");
+        }
+    } catch (error) {
+        console.log(`Error happened fetching the trie json: ${error}`);
     }
 }
 

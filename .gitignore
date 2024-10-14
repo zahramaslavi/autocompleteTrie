@@ -4,3 +4,5 @@ autocomplete-node/dist
 
 autocomplete/node_modules
 autocomplete/public
+autocomplete/dist
+autocomplete/coverage

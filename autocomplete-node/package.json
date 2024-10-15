@@ -23,9 +23,17 @@
   "scripts": {
     "build": "tsc",
     "start": "nodemon --exec ts-node src/index.ts",
+    "test": "jest",
     "dev": "tsc --watch",
     "clear": "rm -rf node_modules dist && yarn cache clean",
     "docker-build": "docker build -t zahramaslavi/autocomplete-node .",
     "docker-run": "docker run -p 3001:3001 zahramaslavi/autocomplete-node"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.13",
+    "@types/supertest": "^6.0.2",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5"
   }
 }

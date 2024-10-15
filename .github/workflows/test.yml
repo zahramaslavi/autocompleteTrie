@@ -29,4 +29,23 @@ jobs:
         working-directory: autocomplete
         run: yarn test
 
+  backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '21'
+
+      - name: Install back-end dependencies
+        working-directory: autocomplete-node
+        run: yarn install
+
+      - name: Run back-end tests
+        working-directory: autocomplete-node
+        run: yarn test
   

@@ -33,3 +33,5 @@ const app = express();
         console.log("An error happened: ", error);        
     }
 })();
+
+export default app;

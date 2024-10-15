@@ -11,6 +11,6 @@
     "resolveJsonModule": true,            // Allows importing JSON modules
     "typeRoots": ["./node_modules/@types"] // Look for types in node_modules/@types
   },
-  "include": ["src/**/*.ts"],              // Include all .ts files in the src folder
+  "include": ["src/**/*.ts", "tests/**/*.ts"],              // Include all .ts files in the src and tests folders
   "exclude": ["node_modules"]              // Exclude node_modules from compilation
 }

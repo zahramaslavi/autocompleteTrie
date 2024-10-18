@@ -43,9 +43,9 @@ jobs:
 
       - name: Install back-end dependencies
         working-directory: autocomplete-node
-        run: yarn install
+        run: yarn docker-build
 
       - name: Run back-end tests
         working-directory: autocomplete-node
-        run: yarn test
+        run: yarn docker-dev-test
   

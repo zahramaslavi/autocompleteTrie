@@ -312,7 +312,12 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@ioredis/commands@^1.1.1":
+"@ioredis/as-callback@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@ioredis/as-callback/-/as-callback-3.0.0.tgz#b96c9b05e6701e85ec6a5e62fa254071b0aec97f"
+  integrity sha512-Kqv1rZ3WbgOrS+hgzJ5xG5WQuhvzzSTRYvNeyPMLOAM78MHSnuKI20JeJGbpuAt//LCuP0vsexZcorqW7kWhJg==
+
+"@ioredis/commands@^1.1.1", "@ioredis/commands@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@ioredis/commands/-/commands-1.2.0.tgz#6d61b3097470af1fdbbe622795b8921d42018e11"
   integrity sha512-Sx1pU8EM64o2BrqNpEO1CNLtKQwyhuXuqyfH7oGKCk+1a33d2r5saW8zNwm3j6BTExtjrv2BxTgzzkMwts6vGg==
@@ -729,6 +734,14 @@
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@types/http-errors/-/http-errors-2.0.4.tgz#7eb47726c391b7345a6ec35ad7f4de469cf5ba4f"
   integrity sha512-D0CFMMtydbJAegzOyHjtiKPLlvnm3iTZyZRSZoLq2mRhDdmLfIWOCYPfQJ4cu2erKghU++QvjcUjp/5h7hESpA==
+
+"@types/ioredis-mock@^8.2.5":
+  version "8.2.5"
+  resolved "https://registry.yarnpkg.com/@types/ioredis-mock/-/ioredis-mock-8.2.5.tgz#ffbb398967d325b1ddfccc0695d14792ca188d76"
+  integrity sha512-cZyuwC9LGtg7s5G9/w6rpy3IOZ6F/hFR0pQlWYZESMo1xQUYbDpa6haqB4grTePjsGzcB/YLBFCjqRunK5wieg==
+  dependencies:
+    "@types/node" "*"
+    ioredis ">=5"
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.6"
@@ -1584,6 +1597,20 @@ fecha@^4.2.0:
   resolved "https://registry.yarnpkg.com/fecha/-/fecha-4.2.3.tgz#4d9ccdbc61e8629b259fdca67e65891448d569fd"
   integrity sha512-OP2IUU6HeYKJi3i0z4A19kHMQoLVs4Hc+DPqqxI2h/DPZHTm/vjsfC6P0b4jCMy14XizLBqvndQ+UilD7707Jw==
 
+fengari-interop@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/fengari-interop/-/fengari-interop-0.1.3.tgz#3ad37a90e7430b69b365441e9fc0ba168942a146"
+  integrity sha512-EtZ+oTu3kEwVJnoymFPBVLIbQcCoy9uWCVnMA6h3M/RqHkUBsLYp29+RRHf9rKr6GwjubWREU1O7RretFIXjHw==
+
+fengari@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/fengari/-/fengari-0.1.4.tgz#72416693cd9e43bd7d809d7829ddc0578b78b0bb"
+  integrity sha512-6ujqUuiIYmcgkGz8MGAdERU57EIluGGPSUgGPTsco657EHa+srq0S3/YUl/r9kx1+D+d4rGfYObd+m8K22gB1g==
+  dependencies:
+    readline-sync "^1.4.9"
+    sprintf-js "^1.1.1"
+    tmp "^0.0.33"
+
 filelist@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/filelist/-/filelist-1.0.4.tgz#f78978a1e944775ff9e62e744424f215e58352b5"
@@ -1837,7 +1864,18 @@ inherits@2, inherits@2.0.4, inherits@^2.0.3:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
-ioredis@^5.4.1:
+ioredis-mock@^8.9.0:
+  version "8.9.0"
+  resolved "https://registry.yarnpkg.com/ioredis-mock/-/ioredis-mock-8.9.0.tgz#5d694c4b81d3835e4291e0b527f947e260981779"
+  integrity sha512-yIglcCkI1lvhwJVoMsR51fotZVsPsSk07ecTCgRTRlicG0Vq3lke6aAaHklyjmRNRsdYAgswqC2A0bPtQK4LSw==
+  dependencies:
+    "@ioredis/as-callback" "^3.0.0"
+    "@ioredis/commands" "^1.2.0"
+    fengari "^0.1.4"
+    fengari-interop "^0.1.3"
+    semver "^7.5.4"
+
+ioredis@>=5, ioredis@^5.4.1:
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/ioredis/-/ioredis-5.4.1.tgz#1c56b70b759f01465913887375ed809134296f40"
   integrity sha512-2YZsvl7jopIa1gaePkeMtd9rAcSjOOjPtpcLlOeusyO+XH2SK5ZcT+UCrElPP+WVIInh2TzeI4XW9ENaSLVVHA==
@@ -2635,6 +2673,11 @@ onetime@^5.1.2:
   dependencies:
     mimic-fn "^2.1.0"
 
+os-tmpdir@~1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/os-tmpdir/-/os-tmpdir-1.0.2.tgz#bbe67406c79aa85c5cfec766fe5734555dfa1274"
+  integrity sha512-D2FR03Vir7FIu45XBY20mTb+/ZSWB00sjU9jdQXt83gDrI4Ztz5Fs7/yy74g2N5SVQY4xY1qDr4rNddwYRVX0g==
+
 p-limit@^2.2.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-2.3.0.tgz#3dd33c647a214fdfffd835933eb086da0dc21db1"
@@ -2800,6 +2843,11 @@ readdirp@~3.6.0:
   integrity sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==
   dependencies:
     picomatch "^2.2.1"
+
+readline-sync@^1.4.9:
+  version "1.4.10"
+  resolved "https://registry.yarnpkg.com/readline-sync/-/readline-sync-1.4.10.tgz#41df7fbb4b6312d673011594145705bf56d8873b"
+  integrity sha512-gNva8/6UAe8QYepIQH/jQ2qn91Qj0B9sYjMBBs3QOB8F2CXcKgLxQaJRP76sWVRQt+QU+8fAkCbCvjjMFu7Ycw==
 
 redis-errors@^1.0.0, redis-errors@^1.2.0:
   version "1.2.0"
@@ -2996,6 +3044,11 @@ source-map@^0.6.0, source-map@^0.6.1:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
   integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
 
+sprintf-js@^1.1.1:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.1.3.tgz#4914b903a2f8b685d17fdf78a70e917e872e444a"
+  integrity sha512-Oo+0REFV59/rz3gfJNKQiBlwfHaSESl1pcGyABQsnnIfWOFt6JNj5gCog2U6MLZ//IGYD+nA8nI+mTShREReaA==
+
 sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
@@ -3131,6 +3184,13 @@ text-hex@1.0.x:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/text-hex/-/text-hex-1.0.0.tgz#69dc9c1b17446ee79a92bf5b884bb4b9127506f5"
   integrity sha512-uuVGNWzgJ4yhRaNSiubPY7OjISw4sw4E5Uv0wbjp+OzcbmVU/rsT8ujgcXJhn9ypzsgr5vlzpPqP+MBBKcGvbg==
+
+tmp@^0.0.33:
+  version "0.0.33"
+  resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.33.tgz#6d34335889768d21b2bcda0aa277ced3b1bfadf9"
+  integrity sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==
+  dependencies:
+    os-tmpdir "~1.0.2"
 
 tmpl@1.0.5:
   version "1.0.5"

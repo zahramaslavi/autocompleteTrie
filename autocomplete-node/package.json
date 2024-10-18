@@ -23,15 +23,20 @@
   "scripts": {
     "build": "tsc",
     "start": "nodemon --exec ts-node src/index.ts",
-    "test": "jest",
+    "test": "jest --coverage src/tests/trieRedis.test.ts",
     "dev": "tsc --watch",
     "clear": "rm -rf node_modules dist && yarn cache clean",
     "docker-build": "docker build -t zahramaslavi/autocomplete-node .",
-    "docker-run": "docker run -p 3001:3001 zahramaslavi/autocomplete-node"
+    "docker-run": "docker run -p 3001:3001 zahramaslavi/autocomplete-node",
+    "docker-dev-test": "docker run -e CI=true zahramaslavi/autocomplete-node yarn test",
+    "docker-prod-build": "docker build -t zahramaslavi/autocomplete-node-prod .",
+    "docker-prod-run": "docker run -p 8080:80 zahramaslavi/autocomplete-node-prod"
   },
   "devDependencies": {
+    "@types/ioredis-mock": "^8.2.5",
     "@types/jest": "^29.5.13",
     "@types/supertest": "^6.0.2",
+    "ioredis-mock": "^8.9.0",
     "jest": "^29.7.0",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5"

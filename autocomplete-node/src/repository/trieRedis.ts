@@ -1,16 +1,23 @@
-import Redis from "ioredis";
-import ts from "typescript";
-
-const redis = new Redis({
-    host: 'redis-server',
-    port: 6379
-});
-
 interface suggestionsI {
     [key: string]: number;
 }
 
+interface wordsI {
+    [key: string]: number;
+}
+
 class TrieRedis {
+    redis: any = null;
+
+    constructor(redisServer: any) {
+        this.redis = redisServer;
+    }
+    
+    async initTrie(words: wordsI) {
+        for (const word in words) {
+            const res = await this.insert(word, words[word]);
+        }
+    }
     
     async insert(word: string, freq: number): Promise<boolean> {
         // HSET trie: c 1
@@ -20,13 +27,13 @@ class TrieRedis {
         let key = "trie:";
         for (let i = 0; i < word.length; i++) { 
             const field = word[i];
-            await redis.hincrby(key, field, 1);
+            await this.redis.hincrby(key, field, 1);
             key += word[i];   
         }
-        await redis.hset(key, "endOfWord", 1);
-        await redis.hset(key, "freq", freq);
+        await this.redis.hset(key, "endOfWord", 1);
+        await this.redis.hset(key, "freq", freq);
 
-        const s = await redis.hgetall(key);
+        const s = await this.redis.hgetall(key);
 
         return true;
     }
@@ -34,15 +41,15 @@ class TrieRedis {
     async search(word: string): Promise<boolean> {
         let key = "trie:";
         for (let i = 0; i < word.length; i++) {
-            const exists = await redis.hexists(key, word[i])
+            const exists = await this.redis.hexists(key, word[i])
             if (!exists)
                 return false;
 
             key += word[i]
         }
 
-        await redis.hincrby(key, "freq", 1);
-        const endOfWord = await redis.hget(key, "endOfWord");
+        await this.redis.hincrby(key, "freq", 1);
+        const endOfWord = await this.redis.hget(key, "endOfWord");
         
         return endOfWord ? true : false;
     }
@@ -54,10 +61,10 @@ class TrieRedis {
     async getAkeyFields(key: string): Promise<any> {
         const res: any = {};
 
-        const endOfWord = await redis.hget("trie:"+key, "endOfWord");
-        const frequency = await redis.hget("trie:"+key, "freq");
-        const topSuggestions = await redis.hget("trie:"+key, "topSuggestions");
-        let fields = await redis.hgetall("trie:"+key);
+        const endOfWord = await this.redis.hget("trie:"+key, "endOfWord");
+        const frequency = await this.redis.hget("trie:"+key, "freq");
+        const topSuggestions = await this.redis.hget("trie:"+key, "topSuggestions");
+        let fields = await this.redis.hgetall("trie:"+key);
         res["name"] = endOfWord ? key : key[key.length-1];
         res["attributes"] = {};
         res["attributes"]["endOfWord"] = endOfWord;
@@ -80,13 +87,13 @@ class TrieRedis {
         const res: suggestionsI = {};
 
         const findSuggestion = async (currKey: string) => {
-            const endOfWord = await redis.hget(currKey, "endOfWord");
-            const freq = await redis.hget(currKey, "freq");
+            const endOfWord = await this.redis.hget(currKey, "endOfWord");
+            const freq = await this.redis.hget(currKey, "freq");
             if (endOfWord && freq) {
                 res[currKey.split(':')[1]] = parseInt(freq);
             }
             
-            let fields = await redis.hgetall(currKey);
+            let fields = await this.redis.hgetall(currKey);
             const children = Object.keys(fields)
                 .filter(item => item != "endOfWord" && item != "freq" && item != "topSuggestions");
 
@@ -107,7 +114,7 @@ class TrieRedis {
         // step2: trie:b e
         let key = "trie:";
         for (let i = 0; i < strToSearch.length; i++) {
-            const exists = await redis.hexists(key, strToSearch[i]);
+            const exists = await this.redis.hexists(key, strToSearch[i]);
             if (exists) {
                 key += strToSearch[i]
             } else {
@@ -127,13 +134,13 @@ class TrieRedis {
         const topS = Object.keys(res).sort((a, b) => res[b] - res[a]);
         
         // Cache the found top suggestions
-        await redis.hset(key, "topSuggestions", JSON.stringify(topS))
+        await this.redis.hset(key, "topSuggestions", JSON.stringify(topS))
 
         return topS;
     }
 
     async getCachedTopSuggestions(key: string): Promise<string[]> {
-        const topSuggestions = await redis.hget(key, "topSuggestions");
+        const topSuggestions = await this.redis.hget(key, "topSuggestions");
 
         if (topSuggestions && JSON.parse(topSuggestions).length) {
             return JSON.parse(topSuggestions);

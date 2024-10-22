@@ -29,6 +29,8 @@
     "docker-build": "docker build -t zahramaslavi/autocomplete-node .",
     "docker-run": "docker run -p 3001:3001 zahramaslavi/autocomplete-node",
     "docker-dev-test": "docker run -e CI=true zahramaslavi/autocomplete-node yarn test",
+    "docker-run-be": "docker compose up --build",
+    "docker-dev-test-watch": "docker exec -it zahramaslavi/autocomplete-be yarn test",
     "docker-prod-build": "docker build -t zahramaslavi/autocomplete-node-prod .",
     "docker-prod-run": "docker run -p 8080:80 zahramaslavi/autocomplete-node-prod"
   },

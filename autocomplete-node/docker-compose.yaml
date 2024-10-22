@@ -3,7 +3,12 @@ services:
   redis-server:
     image: 'redis'
   autocompletenode:
+    restart: always
     build: .
     ports:
       - '3001:3001'
+    volumes:
+      - /app/node_modules
+      - .:/app
+    container_name: zahramaslavi/autocomplete-be
   

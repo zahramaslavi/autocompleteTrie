@@ -35,4 +35,13 @@ describe('Testing TrieRedis class', () => {
         expect(res3).toBeFalsy();
     });
 
+    it('should not be able to find a word when it is not added', async () => {
+        const res3 = await redisTrie.search("testWord");
+        expect(res3).toBeFalsy();
+    });
+
+    it('should get top suggestions when a string is entered', async () => {
+        const res3 = await redisTrie.topSuggestions("cu");
+        expect(res3).toEqual(["current", "currency"]);
+    });
   });

@@ -124,7 +124,7 @@ class TrieRedis {
         const tSuggestons = await this.getCachedTopSuggestions(key);
 
         if (tSuggestons.length) {
-            console.log("cached suggestions" + strToSearch, tSuggestons)
+            console.log("cached suggestions for " + strToSearch + ":", tSuggestons)
             return tSuggestons
         }
         

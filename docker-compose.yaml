@@ -1,24 +1,28 @@
-version: '3.8'
+version: '3'
 
 services:
   autocompletenode:
+    restart: always
     build: ./autocomplete-node
     ports:
       - '3001:3001'
       - '4001:8081'
     volumes:
-      - ./autocomplete-node:/usr/src/app
-    container_name: autocomplete-node
+      - /app/node_modules
+      - ./autocomplete-node:/app
+    container_name: zahramaslavi/autocomplete-node
     networks:
       - app-network
 
   autocompletereact:
+    restart: always
     build: ./autocomplete
     ports:
       - '3000:3000'
     volumes:
-      - ./autocomplete:/usr/src/app
-    container_name: autocomplete-react
+      - /app/node_modules
+      - ./autocomplete:/app
+    container_name: zahramaslavi/autocomplete-react
     depends_on:
       - autocompletenode
     networks:
